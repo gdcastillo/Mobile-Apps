@@ -18,6 +18,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".ClosableActivity" />
+        <activity android:name=".Location1" />
+        <activity android:name=".Location2" />
+        <activity android:name=".Location3" />
+        <activity android:name=".Location4" />
+        <activity android:name=".Location5" />
+        <activity android:name=".Location6"></activity>
     </application>
 
 </manifest>

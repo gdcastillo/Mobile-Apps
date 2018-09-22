@@ -27,7 +27,11 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //knownLocations.add(new KnownLocation(100,100));   //basically, add known locations here
+        knownLocations.add(new KnownLocation(100,20, Location1.class));         //REALLY IMPORTANT, the class is what activity will open
+        knownLocations.add(new KnownLocation(100,25, Location2.class));
+        knownLocations.add(new KnownLocation(100,30, Location3.class));
+
+
 
         LocationManager locationManager = (LocationManager) getSystemService (Context.LOCATION_SERVICE);    //the object that gives you the location
 
@@ -47,17 +51,21 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     @Override
     public void onLocationChanged(Location location) {
 
-        KnownLocation dw = new KnownLocation(100,20, "Digital Worlds", MainActivity.class);         //REALLY IMPORTANT, the class is what activity will open
 
 
         TextView text = findViewById(R.id.messageArea);
         text.setText("" + location.getLongitude() + " " + location.getLatitude());
 
 
+        for(int i=0;i<knownLocations.size();i++){
+            KnownLocation loc=knownLocations.get(i);
+            if(loc.isCloseTo(location.getLongitude(),location.getLatitude(),100)){
+                loc.show(this,getBaseContext());        //this shows whatever activity you specified
+            }
+
         //create a for loop to check to see if you're close to a location; is that really necessary?
 
 
-        if(dw.isCloseTo(location.getLongitude(), location.getLatitude(), 50)){  //checking if we're close to a location
 
         }
         //if location is close to KnownLocation1, then show Activity1

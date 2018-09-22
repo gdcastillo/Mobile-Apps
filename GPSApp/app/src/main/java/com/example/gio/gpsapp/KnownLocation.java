@@ -1,17 +1,29 @@
 package com.example.gio.gpsapp;
 
+import android.content.Context;
+import android.content.Intent;
+import android.support.v7.app.AppCompatActivity;
+
 public class KnownLocation {
 
     double longitude;
     double latitude;
-    String name;
+    Class activity;
 
-    KnownLocation(double lon, double lat, String n, Class activity){
+    KnownLocation(double lon, double lat, Class a){
         longitude=lon;
         latitude=lat;
-        name = n;
+        activity =a;
     }
 
+
+    public void show(AppCompatActivity act, Context c){
+        Intent intent1 = new Intent("CloseTop");    //closes any new open activity before creating a new one
+        act.sendBroadcast(intent1);                         //technically, just sends a message only to activities that will be listening; so only extend activities you want to close
+
+        Intent i = new Intent(c, activity); //opens the new activity
+        act.startActivity(i);
+    }
     public boolean isCloseTo(double lon, double lat, double radius){  //if that point is within this radius, return true
 
         if(distanceFrom(longitude, latitude, lon,lat) < radius) return true;
