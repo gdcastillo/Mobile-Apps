@@ -3,7 +3,7 @@ package com.example.gio.gpsapp;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class Location4 extends AppCompatActivity {
+public class Location4 extends ClosableActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

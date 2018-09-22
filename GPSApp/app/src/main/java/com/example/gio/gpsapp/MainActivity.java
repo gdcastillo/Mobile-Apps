@@ -35,6 +35,12 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         knownLocations.add(new KnownLocation(15,15, Location25.class));
         knownLocations.add(new KnownLocation(100,30, Location3.class));
         knownLocations.add(new KnownLocation(25,25, Location35.class));
+        knownLocations.add(new KnownLocation(100,35, Location4.class));
+        knownLocations.add(new KnownLocation(35,35, Location45.class));
+        knownLocations.add(new KnownLocation(100,40, Location5.class));
+        knownLocations.add(new KnownLocation(45,45, Location55.class));
+        knownLocations.add(new KnownLocation(100,45, Location6.class));
+        knownLocations.add(new KnownLocation(55,55, Location65.class));
 
 
 
@@ -56,6 +62,9 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     boolean firstLocVisited = false;
     boolean secondLocVisited = false;
     boolean thirdLocVisited = false;
+    boolean fourthLocVisited = false;
+    boolean fifthLocVisited = false;
+    boolean sixthLocVisited = false;
 
     @Override
     public void onLocationChanged(Location location) {
@@ -72,35 +81,80 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
 
 
                       //this shows whatever activity you specified
-
+                //1
                 if(i == 0 && !firstLocVisited) {
                     loc.show(this,getBaseContext());
 
                     firstLocVisited = true;
 
                 }
+                //1.5
                 else if(i == 1 && firstLocVisited) {
                     loc.show(this,getBaseContext());
 
 
                 }
+                //2
                 else if(i == 2 && firstLocVisited && !secondLocVisited) {
                     loc.show(this,getBaseContext());
 
                     secondLocVisited = true;
                 }
+                //2.5
                 else if(i == 3 && firstLocVisited && secondLocVisited ) {
                     loc.show(this,getBaseContext());
 
                 }
+                //3
                 else if(i == 4 && firstLocVisited && secondLocVisited && !thirdLocVisited) {
                     loc.show(this,getBaseContext());
-
                     thirdLocVisited = true;
                 }
+                //3.5
                 else if(i == 5 && firstLocVisited && secondLocVisited && thirdLocVisited) {
                     loc.show(this,getBaseContext());
                 }
+
+                //4
+                else if(i == 6 && firstLocVisited && secondLocVisited && thirdLocVisited && !fourthLocVisited) {
+                    loc.show(this,getBaseContext());
+                    fourthLocVisited = true;
+                }
+                //4.5
+                else if(i == 7 && firstLocVisited && secondLocVisited && thirdLocVisited && fourthLocVisited) {
+                    loc.show(this,getBaseContext());
+                }
+
+
+                /*
+                //5
+                else if(i == 8 && firstLocVisited && secondLocVisited && thirdLocVisited && fourthLocVisited &&!fifthLocVisited) {
+                    loc.show(this,getBaseContext());
+                    fifthLocVisited = true;
+                }
+                //5.5
+                else if(i == 9 && firstLocVisited && secondLocVisited && thirdLocVisited && fourthLocVisited && fifthLocVisited) {
+                    loc.show(this,getBaseContext());
+                }
+
+                /*
+                //6
+                else if(i == 10 && firstLocVisited && secondLocVisited && thirdLocVisited && fourthLocVisited && fifthLocVisited && !sixthLocVisited) {
+                    loc.show(this, getBaseContext());
+                    sixthLocVisited = true;
+                }
+                //6.5
+                else if(i == 11 && firstLocVisited && secondLocVisited && thirdLocVisited && fourthLocVisited &&fifthLocVisited && sixthLocVisited) {
+                    loc.show(this, getBaseContext());
+                }
+
+                /*
+
+
+
+
+
+
                 /*else if(i == 4 && firstLocVisited && !secondLocVisited) {
                     secondLocVisited = true;
                     knownLocations.set(0,new KnownLocation(12, 1, Location25.class));
