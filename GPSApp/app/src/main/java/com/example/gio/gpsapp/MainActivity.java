@@ -2,6 +2,7 @@ package com.example.gio.gpsapp;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
@@ -20,16 +21,20 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
 
     final int  REQUEST_PERMISSION_ACCESS_FINE_LOCATION = 1; //CONSTANT, won't be changed
 
-    List<KnownLocation> knownLocations = new ArrayList<KnownLocation>();    //definitely fill this arrayList out with stuff
+    List<KnownLocation> knownLocations = new ArrayList<KnownLocation>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         knownLocations.add(new KnownLocation(100,20, Location1.class));         //REALLY IMPORTANT, the class is what activity will open
+        knownLocations.add(new KnownLocation(5,5, Location15.class));
         knownLocations.add(new KnownLocation(100,25, Location2.class));
+        knownLocations.add(new KnownLocation(15,15, Location25.class));
         knownLocations.add(new KnownLocation(100,30, Location3.class));
+        knownLocations.add(new KnownLocation(25,25, Location35.class));
 
 
 
@@ -48,6 +53,10 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
 
     boolean key_unlocked = false;   //since items need to be unlocked in a certain order, all are false booleans
 
+    boolean firstLocVisited = false;
+    boolean secondLocVisited = false;
+    boolean thirdLocVisited = false;
+
     @Override
     public void onLocationChanged(Location location) {
 
@@ -60,8 +69,57 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         for(int i=0;i<knownLocations.size();i++){
             KnownLocation loc=knownLocations.get(i);
             if(loc.isCloseTo(location.getLongitude(),location.getLatitude(),100)){
-                loc.show(this,getBaseContext());        //this shows whatever activity you specified
+
+
+                      //this shows whatever activity you specified
+
+                if(i == 0 && !firstLocVisited) {
+                    loc.show(this,getBaseContext());
+
+                    firstLocVisited = true;
+
+                }
+                else if(i == 1 && firstLocVisited) {
+                    loc.show(this,getBaseContext());
+
+
+                }
+                else if(i == 2 && firstLocVisited && !secondLocVisited) {
+                    loc.show(this,getBaseContext());
+
+                    secondLocVisited = true;
+                }
+                else if(i == 3 && firstLocVisited && secondLocVisited ) {
+                    loc.show(this,getBaseContext());
+
+                }
+                else if(i == 4 && firstLocVisited && secondLocVisited && !thirdLocVisited) {
+                    loc.show(this,getBaseContext());
+
+                    thirdLocVisited = true;
+                }
+                else if(i == 5 && firstLocVisited && secondLocVisited && thirdLocVisited) {
+                    loc.show(this,getBaseContext());
+                }
+                /*else if(i == 4 && firstLocVisited && !secondLocVisited) {
+                    secondLocVisited = true;
+                    knownLocations.set(0,new KnownLocation(12, 1, Location25.class));
+                }
+                else if(i == 5 && firstLocVisited && !secondLocVisited) {
+                    secondLocVisited = true;
+                    knownLocations.set(0,new KnownLocation(12, 1, Location25.class));
+                }
+                else if(i == 6 && firstLocVisited && !secondLocVisited) {
+                    secondLocVisited = true;
+                    knownLocations.set(0,new KnownLocation(12, 1, Location25.class));
+                }*/
+
+                //maybe I can have a bool isVisited in the KnownLocation class, and if that is true/false I do stuff
             }
+            /*else if(firstLocVisited == true && secondLocVisited == false && thirdLocVisited == false){      //after exiting the radius of
+                Intent myIntent = new Intent(getBaseContext(), Location4.class);    //should switch to Location1.5, the main menu after finding 1
+                this.startActivity(myIntent);
+            }*/
 
         //create a for loop to check to see if you're close to a location; is that really necessary?
 

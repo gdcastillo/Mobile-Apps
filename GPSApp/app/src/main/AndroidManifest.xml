@@ -24,7 +24,14 @@
         <activity android:name=".Location3" />
         <activity android:name=".Location4" />
         <activity android:name=".Location5" />
-        <activity android:name=".Location6"></activity>
+        <activity android:name=".Location6" />
+        <activity android:name=".Location15" />
+        <activity android:name=".Location25" />
+        <activity android:name=".Location35" />
+        <activity android:name=".Location45" />
+        <activity android:name=".Location55" />
+        <activity android:name=".Location65" />
+        <activity android:name=".Location75"></activity>
     </application>
 
 </manifest>
