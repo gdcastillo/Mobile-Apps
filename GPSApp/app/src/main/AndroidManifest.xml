@@ -31,7 +31,15 @@
         <activity android:name=".Location45" />
         <activity android:name=".Location55" />
         <activity android:name=".Location65" />
-        <activity android:name=".Location75"></activity>
+        <activity android:name=".Location75" />
+        <activity android:name=".Location0" />
+        <activity android:name=".clue1" />
+        <activity android:name=".clue2" />
+        <activity android:name=".clue3" />
+        <activity android:name=".clue4" />
+        <activity android:name=".clue5" />
+        <activity android:name=".clue6" />
+        <activity android:name=".clue0"></activity>
     </application>
 
 </manifest>
