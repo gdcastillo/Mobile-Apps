@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".Location1">
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/rootRL"
@@ -16,26 +14,27 @@
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0">
 
         <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="282dp"
-            android:layout_height="445dp"
-            android:layout_centerHorizontal="true"
-            app:srcCompat="@drawable/title" />
+            android:id="@+id/imageView3"
+            android:layout_width="313dp"
+            android:layout_height="412dp"
+            android:layout_centerInParent="true"
+            app:srcCompat="@drawable/found4" />
 
-        <Button
-            android:id="@+id/button"
-            android:layout_width="236dp"
-            android:layout_height="325dp"
+        <ImageButton
+            android:id="@+id/imageButton2"
+            android:layout_width="156dp"
+            android:layout_height="62dp"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="81dp"
-            android:alpha="0.0"
-            android:onClick="onNextClicked" />
+            android:layout_marginBottom="61dp"
+            android:onClick="onNextClicked"
+            app:srcCompat="@drawable/accept" />
+
     </RelativeLayout>
-
-
 </android.support.constraint.ConstraintLayout>
