@@ -127,11 +127,14 @@ public class MyWatchFace extends CanvasWatchFaceService {
         private Paint mBackgroundPaint;
         private Bitmap mBackgroundBitmap;
         private Bitmap mGrayBackgroundBitmap;
+        private Bitmap mSeptemberPic;
         private boolean mAmbient;
         private boolean mLowBitAmbient;
         private boolean mBurnInProtection;
         private Date date = new Date();
 
+
+        /*CRITICAL*/
         @Override
         public void onCreate(SurfaceHolder holder) {
             super.onCreate(holder);
@@ -152,7 +155,12 @@ public class MyWatchFace extends CanvasWatchFaceService {
             mBackgroundPaint = new Paint();
             mBackgroundPaint.setColor(Color.YELLOW);
            // mBackgroundBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.bg);
+
+            //TODO: include all my custom images here
             mBackgroundBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.pumpkin);
+            mSeptemberPic = BitmapFactory.decodeResource(getResources(), R.drawable.bg);
+
+
 
 
             /* Extracts colors from background image to improve watchface style. */
@@ -219,8 +227,9 @@ public class MyWatchFace extends CanvasWatchFaceService {
             mBurnInProtection = properties.getBoolean(PROPERTY_BURN_IN_PROTECTION, false);
         }
 
+        /*CRITICAL*/
         @Override
-        public void onTimeTick() {      //called when the date has changed
+        public void onTimeTick() {      //called when the date has changed or every second
 
             date = mCalendar.getTime();
 
@@ -252,7 +261,10 @@ public class MyWatchFace extends CanvasWatchFaceService {
             updateTimer();
         }
 
+        /*CRITICAL*/
         private void updateWatchHandStyle() {
+
+            //TODO: set these to my holidays and change the colors to match that holiday (for hands)
             if(dayInt == 01 && monthInt == 11){
                 mHourPaint.setColor(Color.YELLOW);
                 mMinutePaint.setColor(Color.YELLOW);
@@ -391,7 +403,6 @@ public class MyWatchFace extends CanvasWatchFaceService {
                     break;
                 case TAP_TYPE_TAP:
                     // The user has completed the tap gesture.
-                    // TODO: Add code to handle the tap gesture.
                     Toast.makeText(getApplicationContext(), R.string.message, Toast.LENGTH_SHORT)
                             .show();
                     break;
@@ -399,8 +410,9 @@ public class MyWatchFace extends CanvasWatchFaceService {
             invalidate();
         }
 
+        //TODO: add additional images
         @Override
-        public void onDraw(Canvas canvas, Rect bounds) {
+        public void onDraw(Canvas canvas, Rect bounds) {            //this is called every second or something
             long now = System.currentTimeMillis();
             mCalendar.setTimeInMillis(now);
 
@@ -409,7 +421,12 @@ public class MyWatchFace extends CanvasWatchFaceService {
         }
 
         private void drawBackground(Canvas canvas) {
+            //TODO: check if today is target holiday. If it is, draw a different picture
+            //TODO: ONLY CHANGE the first parameter, everything else stays the same
 
+            if(dayInt == 31 && monthInt == 10){         //Gio: putting it here might cause it to always be on through ambient mode; consider alternatives
+               canvas.drawBitmap(mSeptemberPic, 0, 0, mBackgroundPaint);
+            }
             if (mAmbient && (mLowBitAmbient || mBurnInProtection)) {
                 canvas.drawColor(Color.BLACK);
             } else if (mAmbient) {
