@@ -128,9 +128,11 @@ public class MyWatchFace extends CanvasWatchFaceService {
         private Bitmap mBackgroundBitmap;
         private Bitmap mGrayBackgroundBitmap;
         private Bitmap mSeptemberPic;
+        private Bitmap mChristmasPic;
         private boolean mAmbient;
         private boolean mLowBitAmbient;
         private boolean mBurnInProtection;
+        private boolean isSet = false;
         private Date date = new Date();
 
 
@@ -147,6 +149,7 @@ public class MyWatchFace extends CanvasWatchFaceService {
 
             date = mCalendar.getTime();              //ask Angelos about this
 
+            setDates();
             initializeBackground();
             initializeWatchFace();
         }
@@ -157,8 +160,9 @@ public class MyWatchFace extends CanvasWatchFaceService {
            // mBackgroundBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.bg);
 
             //TODO: include all my custom images here
-            mBackgroundBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.pumpkin);
-            mSeptemberPic = BitmapFactory.decodeResource(getResources(), R.drawable.bg);
+            mBackgroundBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.bg);
+            mSeptemberPic = BitmapFactory.decodeResource(getResources(), R.drawable.pumpkin);
+            mChristmasPic = BitmapFactory.decodeResource(getResources(), R.drawable.tree);
 
 
 
@@ -227,10 +231,7 @@ public class MyWatchFace extends CanvasWatchFaceService {
             mBurnInProtection = properties.getBoolean(PROPERTY_BURN_IN_PROTECTION, false);
         }
 
-        /*CRITICAL*/
-        @Override
-        public void onTimeTick() {      //called when the date has changed or every second
-
+        private void setDates(){
             date = mCalendar.getTime();
 
 
@@ -239,10 +240,21 @@ public class MyWatchFace extends CanvasWatchFaceService {
 
             dayInt = Integer.parseInt(day);
             monthInt = Integer.parseInt(month);
+        }
+        /*CRITICAL*/
+        @Override
+        public void onTimeTick() {      //called when the date has changed or every second
 
-            updateWatchHandStyle();                             //this is why it keeps on flashing
+            //updateWatchHandStyle();                             //this is why it keeps on flashing
 
+            int prevDayInt = Integer.parseInt(day);
+            int prevMonthInt = Integer.parseInt(month);
 
+            setDates();
+
+            if(prevDayInt != dayInt || prevMonthInt != monthInt) {   //the day has changed, time to update
+                isSet = true;
+            }
 
 
 
@@ -255,7 +267,7 @@ public class MyWatchFace extends CanvasWatchFaceService {
             super.onAmbientModeChanged(inAmbientMode);
             mAmbient = inAmbientMode;
 
-            updateWatchHandStyle();
+           //updateWatchHandStyle();
 
             /* Check and trigger whether or not timer should be running (only in active mode). */
             updateTimer();
@@ -263,9 +275,8 @@ public class MyWatchFace extends CanvasWatchFaceService {
 
         /*CRITICAL*/
         private void updateWatchHandStyle() {
-
             //TODO: set these to my holidays and change the colors to match that holiday (for hands)
-            if(dayInt == 01 && monthInt == 11){
+            if(dayInt == 31 && monthInt == 10 && isSet){
                 mHourPaint.setColor(Color.YELLOW);
                 mMinutePaint.setColor(Color.YELLOW);
                 mSecondPaint.setColor(Color.YELLOW);
@@ -280,6 +291,7 @@ public class MyWatchFace extends CanvasWatchFaceService {
                 mMinutePaint.clearShadowLayer();
                 mSecondPaint.clearShadowLayer();
                 mTickAndCirclePaint.clearShadowLayer();
+                isSet = false;
             }
              else if (mAmbient) {
                 mHourPaint.setColor(Color.GREEN);
@@ -416,6 +428,7 @@ public class MyWatchFace extends CanvasWatchFaceService {
             long now = System.currentTimeMillis();
             mCalendar.setTimeInMillis(now);
 
+            setDates();
             drawBackground(canvas);
             drawWatchFace(canvas);
         }
@@ -427,7 +440,10 @@ public class MyWatchFace extends CanvasWatchFaceService {
             if(dayInt == 31 && monthInt == 10){         //Gio: putting it here might cause it to always be on through ambient mode; consider alternatives
                canvas.drawBitmap(mSeptemberPic, 0, 0, mBackgroundPaint);
             }
-            if (mAmbient && (mLowBitAmbient || mBurnInProtection)) {
+            else if(dayInt == 25 && monthInt == 12){
+                canvas.drawBitmap(mChristmasPic, 0, 0, mBackgroundPaint);
+            }
+            else if (mAmbient && (mLowBitAmbient || mBurnInProtection)) {
                 canvas.drawColor(Color.BLACK);
             } else if (mAmbient) {
                 canvas.drawBitmap(mGrayBackgroundBitmap, 0, 0, mBackgroundPaint);
