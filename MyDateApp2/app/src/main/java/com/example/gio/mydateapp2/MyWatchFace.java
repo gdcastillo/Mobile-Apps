@@ -122,6 +122,8 @@ public class MyWatchFace extends CanvasWatchFaceService {
         private Bitmap mGrayBackgroundBitmap;
         private Bitmap mSeptemberPic;
         private Bitmap mChristmasPic;
+        private Bitmap mArborDay;
+        private Bitmap mThanksgivingDay;
         private boolean mAmbient;
         private boolean mLowBitAmbient;
         private boolean mBurnInProtection;
@@ -151,7 +153,11 @@ public class MyWatchFace extends CanvasWatchFaceService {
             //TODO: include all my custom images here
             //TODO: All images must be a square jpg, like 450x450
             mBackgroundBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.bg);
-            
+            mSeptemberPic = BitmapFactory.decodeResource(getResources(), R.drawable.halloween);   //halloween
+            mArborDay = BitmapFactory.decodeResource(getResources(), R.drawable.treetwo);        //arbor day
+            mThanksgivingDay = BitmapFactory.decodeResource(getResources(), R.drawable.thanksgiving);
+
+
             /* Extracts colors from background image to improve watchface style. */
             Palette.from(mBackgroundBitmap).generate(new Palette.PaletteAsyncListener() {
                 @Override
@@ -245,11 +251,46 @@ public class MyWatchFace extends CanvasWatchFaceService {
         }
 
         private void updateWatchHandStyle() {
-            if(dayInt == 31 && monthInt == 10){
+            //TODO: set the colors and dates here
+            if(dayInt == 31 && monthInt == 10){             //Halloween
                 mHourPaint.setColor(Color.YELLOW);
                 mMinutePaint.setColor(Color.YELLOW);
                 mSecondPaint.setColor(Color.YELLOW);
                 mTickAndCirclePaint.setColor(Color.YELLOW);
+
+                mHourPaint.setAntiAlias(false);
+                mMinutePaint.setAntiAlias(false);
+                mSecondPaint.setAntiAlias(false);
+                mTickAndCirclePaint.setAntiAlias(false);
+
+                mHourPaint.clearShadowLayer();
+                mMinutePaint.clearShadowLayer();
+                mSecondPaint.clearShadowLayer();
+                mTickAndCirclePaint.clearShadowLayer();
+                isSet = false;
+            }
+            else if(dayInt == 26 && monthInt == 4){          //change this to 04 if it doesn't work
+                mHourPaint.setColor(Color.GREEN);           //Arbor Day
+                mMinutePaint.setColor(Color.GREEN);
+                mSecondPaint.setColor(Color.GREEN);
+                mTickAndCirclePaint.setColor(Color.GREEN);
+
+                mHourPaint.setAntiAlias(false);
+                mMinutePaint.setAntiAlias(false);
+                mSecondPaint.setAntiAlias(false);
+                mTickAndCirclePaint.setAntiAlias(false);
+
+                mHourPaint.clearShadowLayer();
+                mMinutePaint.clearShadowLayer();
+                mSecondPaint.clearShadowLayer();
+                mTickAndCirclePaint.clearShadowLayer();
+                isSet = false;
+            }
+            else if(dayInt == 22 && monthInt == 11){        //thanksgiving
+                mHourPaint.setColor(Color.BLUE);           //Arbor Day
+                mMinutePaint.setColor(Color.BLUE);
+                mSecondPaint.setColor(Color.BLUE);
+                mTickAndCirclePaint.setColor(Color.BLUE);
 
                 mHourPaint.setAntiAlias(false);
                 mMinutePaint.setAntiAlias(false);
@@ -403,12 +444,17 @@ public class MyWatchFace extends CanvasWatchFaceService {
 
         private void drawBackground(Canvas canvas) {
 
+            //TODO: set holidays here
+
            if(dayInt == 31 && monthInt == 10){         //Gio: putting it here might cause it to always be on through ambient mode; consider alternatives
                 canvas.drawBitmap(mSeptemberPic, 0, 0, mBackgroundPaint);
             }
-            else if(dayInt == 25 && monthInt == 12){
-                canvas.drawBitmap(mChristmasPic, 0, 0, mBackgroundPaint);
-            }
+            else if(dayInt == 26 && monthInt == 04) {        //arbor day
+               canvas.drawBitmap(mArborDay, 0, 0, mBackgroundPaint);
+           }
+           else if(dayInt == 22 && monthInt == 11){
+               canvas.drawBitmap(mThanksgivingDay, 0, 0, mBackgroundPaint);
+           }
             else if (mAmbient && (mLowBitAmbient || mBurnInProtection)) {
                 canvas.drawColor(Color.BLACK);
             } else if (mAmbient) {
